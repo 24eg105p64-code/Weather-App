@@ -1,0 +1,83 @@
+const weatherData = {
+  hyderabad: {
+    temp: "34°C",
+    condition: "Sunny ☀️",
+    humidity: "55%",
+    wind: "12 km/h",
+    icon: "https://cdn-icons-png.flaticon.com/512/869/869869.png"
+  },
+  delhi: {
+    temp: "40°C",
+    condition: "Hot 🔥",
+    humidity: "38%",
+    wind: "10 km/h",
+    icon: "https://cdn-icons-png.flaticon.com/512/869/869869.png"
+  },
+  mumbai: {
+    temp: "30°C",
+    condition: "Rainy 🌧️",
+    humidity: "82%",
+    wind: "20 km/h",
+    icon: "https://cdn-icons-png.flaticon.com/512/414/414974.png"
+  },
+  chennai: {
+    temp: "33°C",
+    condition: "Cloudy ☁️",
+    humidity: "65%",
+    wind: "15 km/h",
+    icon: "https://cdn-icons-png.flaticon.com/512/1163/1163661.png"
+  },
+  bengaluru: {
+    temp: "27°C",
+    condition: "Pleasant 🌤️",
+    humidity: "60%",
+    wind: "8 km/h",
+    icon: "https://cdn-icons-png.flaticon.com/512/1146/1146869.png"
+  }
+};
+
+const cityInput = document.getElementById("city");
+const errorBox = document.getElementById("errorBox");
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function showError(message) {
+  errorBox.textContent = message;
+  errorBox.style.display = "block";
+}
+
+function clearError() {
+  errorBox.textContent = "";
+  errorBox.style.display = "none";
+}
+
+function getWeather() {
+  const city = cityInput.value.trim().toLowerCase();
+
+  if (!city) {
+    showError("Please enter a city name.");
+    return;
+  }
+
+  if (weatherData[city]) {
+    clearError();
+    const w = weatherData[city];
+
+    document.getElementById("cityName").innerHTML = capitalize(city);
+    document.getElementById("temp").innerHTML = w.temp;
+    document.getElementById("condition").innerHTML = w.condition;
+    document.getElementById("humidity").innerHTML = w.humidity;
+    document.getElementById("wind").innerHTML = w.wind;
+    document.getElementById("icon").src = w.icon;
+  } else {
+    showError("City not found. Try: Hyderabad, Delhi, Mumbai, Chennai, or Bengaluru.");
+  }
+}
+
+cityInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    getWeather();
+  }
+});
